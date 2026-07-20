@@ -4,6 +4,10 @@ Spoofs your Discord gateway platform so others see a different client icon on yo
 
 Available for **Vencord/Equicord** and **BetterDiscord**.
 
+
+>**Warning:** This plugin modifies Discord's gateway connection to spoof your platform. This is not official Discord behavior and may violate their Terms of Service. Use at your own risk. The author is not responsible for any account restrictions.
+
+
 ## Platforms
 
 | Option | Shows as |
