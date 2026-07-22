@@ -23,8 +23,8 @@ const settings = definePluginSettings({
             { label: "Desktop (Windows)",                  value: "desktop" },
             { label: "Web / Browser (Chrome)",             value: "web"     },
             { label: "Mobile (Discord Android)",           value: "mobile"  },
-            { label: "Meta Quest" ,       value: "meta"    },
-            { label: "Console" ,         value: "console" },
+            { label: "Meta Quest / VR → VR: Online",       value: "meta"    },
+            { label: "Console",                            value: "console" },
         ],
         onChange: () => forceIdentify(),
     },
@@ -55,10 +55,7 @@ function patchSocket(socket: any) {
     socket.send = function(op: number, data: any, flag?: boolean) {
         if (op === IDENTIFY && data?.properties) {
             const spoof = getSpoofProps();
-            if (spoof) {
-                Object.assign(data.properties, spoof);
-                console.log("[PlatformSpoof] injected:", spoof);
-            }
+            if (spoof) Object.assign(data.properties, spoof);
         }
         return _origSend!.call(this, op, data, flag);
     };
@@ -77,6 +74,8 @@ function unpatchSocket() {
 }
 
 function forceIdentify() {
+    if (settings.store.platform === "off") return;
+
     const socket = getSocket();
     if (!socket) return;
 
